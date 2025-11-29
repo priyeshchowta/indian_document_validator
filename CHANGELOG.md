@@ -42,3 +42,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - API documentation with detailed examples
 - Example Flutter app with interactive validation
 - Changelog following semantic versioning
+
+## [0.1.1] - 2025-11-29
+
+### Fixed
+- Resolved analyzer infos to improve pub points (no errors/warnings/lints):
+	- Replaced deprecated `withOpacity` with `withValues(alpha: ...)` in example app.
+	- Switched tests to use string interpolation and removed unnecessary braces.
+- Ran `dart format` across the repository to satisfy formatter.
+
+### Maintenance
+- Verified `dart analyze` shows no issues and all tests pass (`dart test`).

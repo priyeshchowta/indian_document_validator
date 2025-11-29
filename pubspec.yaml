@@ -1,6 +1,6 @@
 name: indian_document_validators
 description: Pure Dart offline validators for Indian PAN, Aadhaar, GSTIN, IFSC, and UPI VPA identifiers.
-version: 0.1.0
+version: 0.1.1
 homepage: https://github.com/priyeshchowta/indian_document_validator
 repository: https://github.com/priyeshchowta/indian_document_validator
 issue_tracker: https://github.com/priyeshchowta/indian_document_validator/issues
