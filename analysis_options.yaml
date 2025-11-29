@@ -1,0 +1,7 @@
+include: package:lints/recommended.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    avoid_print: false
+    library_private_types_in_public_api: false

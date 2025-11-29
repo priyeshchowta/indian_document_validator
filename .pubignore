@@ -1,0 +1,27 @@
+# Exclude common build and tooling directories
+.dart_tool/
+.packages
+build/
+.idea/
+.vscode/
+.DS_Store
+
+# Exclude example platform folders and build artifacts to reduce package size
+example/.dart_tool/
+example/build/
+example/.idea/
+example/.vscode/
+example/.DS_Store
+example/ios/
+example/android/
+example/macos/
+example/windows/
+example/linux/
+example/web/.dart_tool/
+
+# Node/yarn caches (if any)
+node_modules/
+
+# Misc
+coverage/
+**/*.log
