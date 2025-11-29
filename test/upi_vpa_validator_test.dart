@@ -25,30 +25,46 @@ void main() {
         expect(UpiVpaValidator.validate('@paytm'), false); // No username
         expect(UpiVpaValidator.validate('user@'), false); // No provider
         expect(UpiVpaValidator.validate('user@@paytm'), false); // Multiple @
-        expect(UpiVpaValidator.validate('user@paytm@extra'), false); // Multiple @
+        expect(
+            UpiVpaValidator.validate('user@paytm@extra'), false); // Multiple @
       });
 
       test('should return false for invalid username', () {
-        expect(UpiVpaValidator.validate('.user@paytm'), false); // Starts with dot
+        expect(
+            UpiVpaValidator.validate('.user@paytm'), false); // Starts with dot
         expect(UpiVpaValidator.validate('user.@paytm'), false); // Ends with dot
-        expect(UpiVpaValidator.validate('-user@paytm'), false); // Starts with hyphen
-        expect(UpiVpaValidator.validate('user-@paytm'), false); // Ends with hyphen
-        expect(UpiVpaValidator.validate('_user@paytm'), false); // Starts with underscore
-        expect(UpiVpaValidator.validate('user_@paytm'), false); // Ends with underscore
-        expect(UpiVpaValidator.validate('user..name@paytm'), false); // Consecutive dots
-        expect(UpiVpaValidator.validate('user--name@paytm'), false); // Consecutive hyphens
-        expect(UpiVpaValidator.validate('user__name@paytm'), false); // Consecutive underscores
-        expect(UpiVpaValidator.validate('user@#paytm'), false); // Special chars in username
-        expect(UpiVpaValidator.validate('user\$@paytm'), false); // Special chars in username
+        expect(UpiVpaValidator.validate('-user@paytm'),
+            false); // Starts with hyphen
+        expect(
+            UpiVpaValidator.validate('user-@paytm'), false); // Ends with hyphen
+        expect(UpiVpaValidator.validate('_user@paytm'),
+            false); // Starts with underscore
+        expect(UpiVpaValidator.validate('user_@paytm'),
+            false); // Ends with underscore
+        expect(UpiVpaValidator.validate('user..name@paytm'),
+            false); // Consecutive dots
+        expect(UpiVpaValidator.validate('user--name@paytm'),
+            false); // Consecutive hyphens
+        expect(UpiVpaValidator.validate('user__name@paytm'),
+            false); // Consecutive underscores
+        expect(UpiVpaValidator.validate('user@#paytm'),
+            false); // Special chars in username
+        expect(UpiVpaValidator.validate('user\$@paytm'),
+            false); // Special chars in username
       });
 
       test('should return false for invalid provider', () {
-        expect(UpiVpaValidator.validate('user@paytm123'), false); // Numbers in provider
-        expect(UpiVpaValidator.validate('user@pay-tm'), false); // Hyphen in provider
-        expect(UpiVpaValidator.validate('user@pay.tm'), false); // Dot in provider
-        expect(UpiVpaValidator.validate('user@pay_tm'), false); // Underscore in provider
+        expect(UpiVpaValidator.validate('user@paytm123'),
+            false); // Numbers in provider
+        expect(UpiVpaValidator.validate('user@pay-tm'),
+            false); // Hyphen in provider
+        expect(
+            UpiVpaValidator.validate('user@pay.tm'), false); // Dot in provider
+        expect(UpiVpaValidator.validate('user@pay_tm'),
+            false); // Underscore in provider
         expect(UpiVpaValidator.validate('user@pay@tm'), false); // @ in provider
-        expect(UpiVpaValidator.validate('user@pay#tm'), false); // Special chars in provider
+        expect(UpiVpaValidator.validate('user@pay#tm'),
+            false); // Special chars in provider
       });
 
       test('should return false for too long username or provider', () {
@@ -68,8 +84,10 @@ void main() {
         expect(result.provider, 'paytm');
       });
 
-      test('should return detailed result for valid UPI VPA with formatting', () {
-        final result = UpiVpaValidator.validateDetailed(' user.name_123@hdfcbank ');
+      test('should return detailed result for valid UPI VPA with formatting',
+          () {
+        final result =
+            UpiVpaValidator.validateDetailed(' user.name_123@hdfcbank ');
         expect(result.isValid, true);
         expect(result.error, null);
         expect(result.username, 'user.name_123');
@@ -108,7 +126,8 @@ void main() {
 
       test('should return detailed error for long username', () {
         final longUsername = 'a' * 51;
-        final result = UpiVpaValidator.validateDetailed('${longUsername}@paytm');
+        final result =
+            UpiVpaValidator.validateDetailed('${longUsername}@paytm');
         expect(result.isValid, false);
         expect(result.error, 'Username cannot be longer than 50 characters');
       });
@@ -123,19 +142,24 @@ void main() {
       test('should return detailed error for invalid username characters', () {
         final result = UpiVpaValidator.validateDetailed('user#@paytm');
         expect(result.isValid, false);
-        expect(result.error, 'Username can only contain letters, numbers, dots, hyphens, and underscores');
+        expect(result.error,
+            'Username can only contain letters, numbers, dots, hyphens, and underscores');
       });
 
-      test('should return detailed error for username starting with special char', () {
+      test(
+          'should return detailed error for username starting with special char',
+          () {
         final result = UpiVpaValidator.validateDetailed('.user@paytm');
         expect(result.isValid, false);
-        expect(result.error, 'Username cannot start or end with special characters');
+        expect(result.error,
+            'Username cannot start or end with special characters');
       });
 
       test('should return detailed error for consecutive special chars', () {
         final result = UpiVpaValidator.validateDetailed('user..name@paytm');
         expect(result.isValid, false);
-        expect(result.error, 'Username cannot have consecutive special characters');
+        expect(result.error,
+            'Username cannot have consecutive special characters');
       });
 
       test('should return detailed error for invalid provider characters', () {
@@ -158,12 +182,15 @@ void main() {
       test('should extract username from valid UPI VPA', () {
         expect(UpiVpaValidator.extractUsername('user@paytm'), 'user');
         expect(UpiVpaValidator.extractUsername('john.doe@phonepe'), 'john.doe');
-        expect(UpiVpaValidator.extractUsername('test_user@googlepay'), 'test_user');
+        expect(UpiVpaValidator.extractUsername('test_user@googlepay'),
+            'test_user');
       });
 
       test('should throw for invalid UPI VPA', () {
-        expect(() => UpiVpaValidator.extractUsername('invalid'), throwsArgumentError);
-        expect(() => UpiVpaValidator.extractUsername('user@@paytm'), throwsArgumentError);
+        expect(() => UpiVpaValidator.extractUsername('invalid'),
+            throwsArgumentError);
+        expect(() => UpiVpaValidator.extractUsername('user@@paytm'),
+            throwsArgumentError);
       });
     });
 
@@ -171,12 +198,15 @@ void main() {
       test('should extract provider from valid UPI VPA', () {
         expect(UpiVpaValidator.extractProvider('user@paytm'), 'paytm');
         expect(UpiVpaValidator.extractProvider('john.doe@phonepe'), 'phonepe');
-        expect(UpiVpaValidator.extractProvider('test_user@googlepay'), 'googlepay');
+        expect(UpiVpaValidator.extractProvider('test_user@googlepay'),
+            'googlepay');
       });
 
       test('should throw for invalid UPI VPA', () {
-        expect(() => UpiVpaValidator.extractProvider('invalid'), throwsArgumentError);
-        expect(() => UpiVpaValidator.extractProvider('user@@paytm'), throwsArgumentError);
+        expect(() => UpiVpaValidator.extractProvider('invalid'),
+            throwsArgumentError);
+        expect(() => UpiVpaValidator.extractProvider('user@@paytm'),
+            throwsArgumentError);
       });
     });
 

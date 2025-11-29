@@ -16,8 +16,14 @@ void main() {
 
       test('should return true for valid Aadhaar with spaces and hyphens', () {
         final a = '23412341234' + VerhoeffChecksum.generate('23412341234');
-        expect(AadhaarValidator.validate('${a.substring(0,4)}-${a.substring(4,8)}-${a.substring(8)}'), true);
-        expect(AadhaarValidator.validate('${a.substring(0,4)} ${a.substring(4,8)} ${a.substring(8)}'), true);
+        expect(
+            AadhaarValidator.validate(
+                '${a.substring(0, 4)}-${a.substring(4, 8)}-${a.substring(8)}'),
+            true);
+        expect(
+            AadhaarValidator.validate(
+                '${a.substring(0, 4)} ${a.substring(4, 8)} ${a.substring(8)}'),
+            true);
         expect(AadhaarValidator.validate(' $a '), true);
       });
 
@@ -25,8 +31,10 @@ void main() {
         expect(AadhaarValidator.validate(''), false);
         expect(AadhaarValidator.validate('23412341234'), false); // Too short
         expect(AadhaarValidator.validate('2341234123456'), false); // Too long
-        expect(AadhaarValidator.validate('23412341234A'), false); // Contains letter
-        expect(AadhaarValidator.validate('abcd1234efgh'), false); // Contains letters
+        expect(AadhaarValidator.validate('23412341234A'),
+            false); // Contains letter
+        expect(AadhaarValidator.validate('abcd1234efgh'),
+            false); // Contains letters
       });
 
       test('should return false for Aadhaar starting with 0 or 1', () {
@@ -35,9 +43,12 @@ void main() {
       });
 
       test('should return false for invalid Verhoeff checksum', () {
-        expect(AadhaarValidator.validate('234123412345'), false); // Invalid checksum
-        expect(AadhaarValidator.validate('378945612356'), false); // Invalid checksum
-        expect(AadhaarValidator.validate('523456789016'), false); // Invalid checksum
+        expect(AadhaarValidator.validate('234123412345'),
+            false); // Invalid checksum
+        expect(AadhaarValidator.validate('378945612356'),
+            false); // Invalid checksum
+        expect(AadhaarValidator.validate('523456789016'),
+            false); // Invalid checksum
       });
 
       test('should return false for all same digits', () {
@@ -56,7 +67,8 @@ void main() {
         expect(result.maskedAadhaar, 'XXXX XXXX 2346');
       });
 
-      test('should return detailed result for valid Aadhaar with formatting', () {
+      test('should return detailed result for valid Aadhaar with formatting',
+          () {
         final result = AadhaarValidator.validateDetailed('2341-2341-2346');
         expect(result.isValid, true);
         expect(result.error, null);
@@ -116,19 +128,22 @@ void main() {
 
       test('should throw for invalid Aadhaar', () {
         expect(() => AadhaarValidator.mask('INVALID'), throwsArgumentError);
-        expect(() => AadhaarValidator.mask('234123412345'), throwsArgumentError);
+        expect(
+            () => AadhaarValidator.mask('234123412345'), throwsArgumentError);
       });
     });
 
     group('format', () {
       test('should format valid Aadhaar correctly', () {
         final a = '23412341234' + VerhoeffChecksum.generate('23412341234');
-        expect(AadhaarValidator.format(a), '${a.substring(0,4)} ${a.substring(4,8)} ${a.substring(8)}');
+        expect(AadhaarValidator.format(a),
+            '${a.substring(0, 4)} ${a.substring(4, 8)} ${a.substring(8)}');
       });
 
       test('should throw for invalid Aadhaar', () {
         expect(() => AadhaarValidator.format('INVALID'), throwsArgumentError);
-        expect(() => AadhaarValidator.format('234123412345'), throwsArgumentError);
+        expect(
+            () => AadhaarValidator.format('234123412345'), throwsArgumentError);
       });
     });
   });

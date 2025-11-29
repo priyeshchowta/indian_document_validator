@@ -39,13 +39,17 @@ void main() {
       });
 
       test('should return false for invalid PAN in GSTIN', () {
-        expect(GstinValidator.validate('2912CDE1234F1Z5'), false); // Invalid PAN
-        expect(GstinValidator.validate('29ABCDE123F41Z5'), false); // Invalid PAN
+        expect(
+            GstinValidator.validate('2912CDE1234F1Z5'), false); // Invalid PAN
+        expect(
+            GstinValidator.validate('29ABCDE123F41Z5'), false); // Invalid PAN
       });
 
       test('should return false for invalid entity code', () {
-        expect(GstinValidator.validate('29ABCDE1234F0Z5'), false); // 0 not allowed
-        expect(GstinValidator.validate('29ABCDE1234F#Z5'), false); // Special char not allowed
+        expect(
+            GstinValidator.validate('29ABCDE1234F0Z5'), false); // 0 not allowed
+        expect(GstinValidator.validate('29ABCDE1234F#Z5'),
+            false); // Special char not allowed
       });
 
       test('should return false for missing Z character', () {
@@ -54,8 +58,10 @@ void main() {
       });
 
       test('should return false for invalid checksum', () {
-        expect(GstinValidator.validate('29ABCDE1234F1Z6'), false); // Wrong checksum
-        expect(GstinValidator.validate('29ABCDE1234F1Z4'), false); // Wrong checksum
+        expect(GstinValidator.validate('29ABCDE1234F1Z6'),
+            false); // Wrong checksum
+        expect(GstinValidator.validate('29ABCDE1234F1Z4'),
+            false); // Wrong checksum
       });
     });
 
@@ -71,7 +77,8 @@ void main() {
 
       test('should return detailed result for valid GSTIN with formatting', () {
         final g = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
-        final result = GstinValidator.validateDetailed('29abcde-1234f-1z${g[14]}');
+        final result =
+            GstinValidator.validateDetailed('29abcde-1234f-1z${g[14]}');
         expect(result.isValid, true);
         expect(result.error, null);
         expect(result.stateCode, '29');
@@ -124,9 +131,12 @@ void main() {
     group('normalize', () {
       test('should normalize GSTIN correctly', () {
         expect(GstinValidator.normalize('29abcde1234f1z5'), '29ABCDE1234F1Z5');
-        expect(GstinValidator.normalize('29ABCDE-1234F-1Z5'), '29ABCDE1234F1Z5');
-        expect(GstinValidator.normalize('29ABCDE 1234F 1Z5'), '29ABCDE1234F1Z5');
-        expect(GstinValidator.normalize(' 29abcde-1234f-1z5 '), '29ABCDE1234F1Z5');
+        expect(
+            GstinValidator.normalize('29ABCDE-1234F-1Z5'), '29ABCDE1234F1Z5');
+        expect(
+            GstinValidator.normalize('29ABCDE 1234F 1Z5'), '29ABCDE1234F1Z5');
+        expect(
+            GstinValidator.normalize(' 29abcde-1234f-1z5 '), '29ABCDE1234F1Z5');
       });
     });
 
@@ -140,7 +150,8 @@ void main() {
 
       test('should throw for invalid GSTIN', () {
         expect(() => GstinValidator.extractPan('INVALID'), throwsArgumentError);
-        expect(() => GstinValidator.extractPan('29ABCDE1234F1Z6'), throwsArgumentError);
+        expect(() => GstinValidator.extractPan('29ABCDE1234F1Z6'),
+            throwsArgumentError);
       });
     });
 
@@ -153,8 +164,10 @@ void main() {
       });
 
       test('should throw for invalid GSTIN', () {
-        expect(() => GstinValidator.extractStateCode('INVALID'), throwsArgumentError);
-        expect(() => GstinValidator.extractStateCode('29ABCDE1234F1Z6'), throwsArgumentError);
+        expect(() => GstinValidator.extractStateCode('INVALID'),
+            throwsArgumentError);
+        expect(() => GstinValidator.extractStateCode('29ABCDE1234F1Z6'),
+            throwsArgumentError);
       });
     });
 
@@ -196,12 +209,15 @@ void main() {
 
     test('should throw for invalid input length', () {
       expect(() => GstChecksum.calculate('29ABCDE1234F1'), throwsArgumentError);
-      expect(() => GstChecksum.calculate('29ABCDE1234F1ZZ'), throwsArgumentError);
+      expect(
+          () => GstChecksum.calculate('29ABCDE1234F1ZZ'), throwsArgumentError);
     });
 
     test('should throw for invalid characters', () {
-      expect(() => GstChecksum.calculate('29ABCDE1234F1@'), throwsArgumentError);
-      expect(() => GstChecksum.calculate('29ABCDE1234F1#'), throwsArgumentError);
+      expect(
+          () => GstChecksum.calculate('29ABCDE1234F1@'), throwsArgumentError);
+      expect(
+          () => GstChecksum.calculate('29ABCDE1234F1#'), throwsArgumentError);
     });
 
     test('should return false for wrong length in validate', () {

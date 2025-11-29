@@ -27,15 +27,19 @@ void main() {
         expect(IfscValidator.validate(''), false);
         expect(IfscValidator.validate('SBIN000123'), false); // Too short
         expect(IfscValidator.validate('SBIN00012345'), false); // Too long
-        expect(IfscValidator.validate('SB1N0001234'), false); // Number in bank code
-        expect(IfscValidator.validate('SBIN1001234'), false); // Should be 0 as 5th char
-        expect(IfscValidator.validate('12IN0001234'), false); // Numbers in bank code
+        expect(IfscValidator.validate('SB1N0001234'),
+            false); // Number in bank code
+        expect(IfscValidator.validate('SBIN1001234'),
+            false); // Should be 0 as 5th char
+        expect(IfscValidator.validate('12IN0001234'),
+            false); // Numbers in bank code
       });
 
       test('should return false for invalid bank code', () {
         expect(IfscValidator.validate('SB120001234'), false);
         expect(IfscValidator.validate('S@IN0001234'), false);
-        expect(IfscValidator.validate('SBIN0001234'), true); // Valid for comparison
+        expect(IfscValidator.validate('SBIN0001234'),
+            true); // Valid for comparison
       });
 
       test('should return false for wrong 5th character', () {
@@ -116,8 +120,10 @@ void main() {
       });
 
       test('should throw for invalid IFSC', () {
-        expect(() => IfscValidator.extractBankCode('INVALID'), throwsArgumentError);
-        expect(() => IfscValidator.extractBankCode('SBIN1001234'), throwsArgumentError);
+        expect(() => IfscValidator.extractBankCode('INVALID'),
+            throwsArgumentError);
+        expect(() => IfscValidator.extractBankCode('SBIN1001234'),
+            throwsArgumentError);
       });
     });
 
@@ -129,8 +135,10 @@ void main() {
       });
 
       test('should throw for invalid IFSC', () {
-        expect(() => IfscValidator.extractBranchCode('INVALID'), throwsArgumentError);
-        expect(() => IfscValidator.extractBranchCode('SBIN1001234'), throwsArgumentError);
+        expect(() => IfscValidator.extractBranchCode('INVALID'),
+            throwsArgumentError);
+        expect(() => IfscValidator.extractBranchCode('SBIN1001234'),
+            throwsArgumentError);
       });
     });
 

@@ -27,8 +27,10 @@ void main() {
         expect(PanValidator.validate('ABCDE1234'), false); // Too short
         expect(PanValidator.validate('ABCDE1234FG'), false); // Too long
         expect(PanValidator.validate('12CDE1234F'), false); // Number at start
-        expect(PanValidator.validate('ABCDE123F4'), false); // Letter in number section
-        expect(PanValidator.validate('ABCDEZ234F'), false); // Letter in number section
+        expect(PanValidator.validate('ABCDE123F4'),
+            false); // Letter in number section
+        expect(PanValidator.validate('ABCDEZ234F'),
+            false); // Letter in number section
         expect(PanValidator.validate('ABCDE12345'), false); // Number at end
       });
 
@@ -70,7 +72,8 @@ void main() {
       test('should return detailed error for invalid format', () {
         final result = PanValidator.validateDetailed('12CDE1234F');
         expect(result.isValid, false);
-        expect(result.error, 'PAN format is invalid. Expected format: 5 letters + 4 digits + 1 letter');
+        expect(result.error,
+            'PAN format is invalid. Expected format: 5 letters + 4 digits + 1 letter');
       });
     });
 

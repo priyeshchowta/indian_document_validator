@@ -1,4 +1,4 @@
-/// Utility functions for Indian document validators.
+// Utility functions for Indian document validators.
 
 /// Sanitizes input string by removing spaces, hyphens, and converting to uppercase.
 String sanitizeInput(String input) {
@@ -58,7 +58,12 @@ class VerhoeffChecksum {
     if (numberWithoutCheckDigit.isEmpty) {
       throw ArgumentError('Input cannot be empty');
     }
-    final digits = numberWithoutCheckDigit.split('').map(int.parse).toList().reversed.toList();
+    final digits = numberWithoutCheckDigit
+        .split('')
+        .map(int.parse)
+        .toList()
+        .reversed
+        .toList();
     int c = 0;
     for (int i = 0; i < digits.length; i++) {
       c = _d[c][_p[(i + 1) % 8][digits[i]]];
@@ -72,20 +77,20 @@ class VerhoeffChecksum {
 class GstChecksum {
   static const String _alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   static const String _digits = '0123456789';
-  
+
   /// Calculates GST checksum for the given 14-character string.
   static String calculate(String input) {
     if (input.length != 14) {
       throw ArgumentError('Input must be exactly 14 characters');
     }
-    
+
     int factor = 2;
     int sum = 0;
-    
+
     for (int i = input.length - 1; i >= 0; i--) {
       final char = input[i];
       int value;
-      
+
       if (_digits.contains(char)) {
         value = int.parse(char);
       } else if (_alphabet.contains(char)) {
@@ -93,32 +98,32 @@ class GstChecksum {
       } else {
         throw ArgumentError('Invalid character in input: $char');
       }
-      
+
       int product = factor * value;
       factor = factor == 2 ? 1 : 2;
       sum += (product ~/ 36) + (product % 36);
     }
-    
+
     int remainder = sum % 36;
     int checkDigit = (36 - remainder) % 36;
-    
+
     if (checkDigit < 10) {
       return checkDigit.toString();
     } else {
       return _alphabet[checkDigit - 10];
     }
   }
-  
+
   /// Validates GST checksum for the given 15-character string.
   static bool validate(String gstin) {
     gstin = sanitizeInput(gstin);
     if (gstin.length != 15) return false;
-    
+
     try {
       final first14 = gstin.substring(0, 14);
       final providedChecksum = gstin.substring(14);
       final calculatedChecksum = calculate(first14);
-      
+
       return providedChecksum == calculatedChecksum;
     } catch (e) {
       return false;
@@ -130,25 +135,60 @@ class GstChecksum {
 class ValidationPatterns {
   /// PAN pattern: 5 letters + 4 digits + 1 letter
   static final RegExp panPattern = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$');
-  
+
   /// Aadhaar pattern: 12 digits
   static final RegExp aadhaarPattern = RegExp(r'^[0-9]{12}$');
-  
+
   /// GSTIN pattern: 15 characters
-  static final RegExp gstinPattern = RegExp(r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$');
-  
+  static final RegExp gstinPattern =
+      RegExp(r'^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1}$');
+
   /// IFSC pattern: 4 letters + 0 + 6 alphanumeric
   static final RegExp ifscPattern = RegExp(r'^[A-Z]{4}0[A-Z0-9]{6}$');
-  
+
   /// UPI VPA pattern: username@provider
   static final RegExp upiVpaPattern = RegExp(r'^[a-zA-Z0-9._-]+@[a-zA-Z]+$');
-  
+
   /// State codes for GSTIN validation
   static const List<String> validStateCodes = [
-    '01', '02', '03', '04', '05', '06', '07', '08', '09', '10',
-    '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
-    '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
-    '31', '32', '33', '34', '35', '36', '37', '97'
+    '01',
+    '02',
+    '03',
+    '04',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+    '11',
+    '12',
+    '13',
+    '14',
+    '15',
+    '16',
+    '17',
+    '18',
+    '19',
+    '20',
+    '21',
+    '22',
+    '23',
+    '24',
+    '25',
+    '26',
+    '27',
+    '28',
+    '29',
+    '30',
+    '31',
+    '32',
+    '33',
+    '34',
+    '35',
+    '36',
+    '37',
+    '97'
   ];
 }
 
@@ -156,13 +196,13 @@ class ValidationPatterns {
 class ValidationResult {
   final bool isValid;
   final String? error;
-  
+
   const ValidationResult({required this.isValid, this.error});
 }
 
 class PanValidationResult extends ValidationResult {
   final String? normalizedPan;
-  
+
   const PanValidationResult({
     required super.isValid,
     super.error,
@@ -172,7 +212,7 @@ class PanValidationResult extends ValidationResult {
 
 class AadhaarValidationResult extends ValidationResult {
   final String? maskedAadhaar;
-  
+
   const AadhaarValidationResult({
     required super.isValid,
     super.error,
@@ -183,7 +223,7 @@ class AadhaarValidationResult extends ValidationResult {
 class GstinValidationResult extends ValidationResult {
   final String? stateCode;
   final String? panNumber;
-  
+
   const GstinValidationResult({
     required super.isValid,
     super.error,
@@ -195,7 +235,7 @@ class GstinValidationResult extends ValidationResult {
 class IfscValidationResult extends ValidationResult {
   final String? bankCode;
   final String? branchCode;
-  
+
   const IfscValidationResult({
     required super.isValid,
     super.error,
@@ -207,7 +247,7 @@ class IfscValidationResult extends ValidationResult {
 class UpiVpaValidationResult extends ValidationResult {
   final String? username;
   final String? provider;
-  
+
   const UpiVpaValidationResult({
     required super.isValid,
     super.error,

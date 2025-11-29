@@ -1,21 +1,21 @@
 import 'utils.dart';
 
 /// IFSC (Indian Financial System Code) validator.
-/// 
+///
 /// IFSC format: 11 characters
 /// Structure: 4 letters (bank code) + '0' + 6 alphanumeric (branch code)
 class IfscValidator {
   /// Validates an IFSC code.
-  /// 
+  ///
   /// [input] - The IFSC string to validate
   /// Returns true if valid, false otherwise
   static bool validate(String input) {
     final sanitized = sanitizeInput(input);
     return ValidationPatterns.ifscPattern.hasMatch(sanitized);
   }
-  
+
   /// Validates an IFSC code with detailed result.
-  /// 
+  ///
   /// [input] - The IFSC string to validate
   /// Returns [IfscValidationResult] with validation details
   static IfscValidationResult validateDetailed(String input) {
@@ -25,16 +25,16 @@ class IfscValidator {
         error: 'IFSC cannot be empty',
       );
     }
-    
+
     final sanitized = sanitizeInput(input);
-    
+
     if (sanitized.length != 11) {
       return const IfscValidationResult(
         isValid: false,
         error: 'IFSC must be 11 characters long',
       );
     }
-    
+
     // Check bank code (first 4 characters)
     final bankCode = sanitized.substring(0, 4);
     if (!RegExp(r'^[A-Z]{4}$').hasMatch(bankCode)) {
@@ -43,7 +43,7 @@ class IfscValidator {
         error: 'Bank code must be 4 letters',
       );
     }
-    
+
     // Check 5th character (must be '0')
     if (sanitized[4] != '0') {
       return const IfscValidationResult(
@@ -51,7 +51,7 @@ class IfscValidator {
         error: '5th character of IFSC must be 0',
       );
     }
-    
+
     // Check branch code (last 6 characters)
     final branchCode = sanitized.substring(5);
     if (!RegExp(r'^[A-Z0-9]{6}$').hasMatch(branchCode)) {
@@ -60,24 +60,24 @@ class IfscValidator {
         error: 'Branch code must be 6 alphanumeric characters',
       );
     }
-    
+
     return IfscValidationResult(
       isValid: true,
       bankCode: bankCode,
       branchCode: branchCode,
     );
   }
-  
+
   /// Normalizes an IFSC by removing spaces/hyphens and converting to uppercase.
-  /// 
+  ///
   /// [input] - The IFSC string to normalize
   /// Returns normalized IFSC string
   static String normalize(String input) {
     return sanitizeInput(input);
   }
-  
+
   /// Extracts the bank code from a valid IFSC.
-  /// 
+  ///
   /// [input] - The IFSC string
   /// Returns bank code portion of the IFSC
   /// Throws [ArgumentError] if IFSC is invalid
@@ -86,12 +86,12 @@ class IfscValidator {
     if (!validate(sanitized)) {
       throw ArgumentError('Invalid IFSC format');
     }
-    
+
     return sanitized.substring(0, 4);
   }
-  
+
   /// Extracts the branch code from a valid IFSC.
-  /// 
+  ///
   /// [input] - The IFSC string
   /// Returns branch code portion of the IFSC
   /// Throws [ArgumentError] if IFSC is invalid
@@ -100,12 +100,12 @@ class IfscValidator {
     if (!validate(sanitized)) {
       throw ArgumentError('Invalid IFSC format');
     }
-    
+
     return sanitized.substring(5);
   }
-  
+
   /// Gets bank name for common bank codes.
-  /// 
+  ///
   /// [bankCode] - The 4-character bank code
   /// Returns bank name or null if not found
   static String? getBankName(String bankCode) {
@@ -140,7 +140,7 @@ class IfscValidator {
       'UTBI': 'United Bank of India',
       'VIJB': 'Vijaya Bank',
     };
-    
+
     return bankNames[bankCode.toUpperCase()];
   }
 }

@@ -47,7 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = PanValidator.validateDetailed(_panController.text);
     setState(() {
       if (result.isValid) {
-        _panResult = '✓ Valid PAN\nNormalized: ${result.normalizedPan}\nMasked: ${PanValidator.mask(result.normalizedPan!)}';
+        _panResult =
+            '✓ Valid PAN\nNormalized: ${result.normalizedPan}\nMasked: ${PanValidator.mask(result.normalizedPan!)}';
       } else {
         _panResult = '✗ Invalid: ${result.error}';
       }
@@ -59,7 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if (result.isValid) {
         final normalized = AadhaarValidator.normalize(_aadhaarController.text);
-        _aadhaarResult = '✓ Valid Aadhaar\nFormatted: ${AadhaarValidator.format(normalized)}\nMasked: ${result.maskedAadhaar}';
+        _aadhaarResult =
+            '✓ Valid Aadhaar\nFormatted: ${AadhaarValidator.format(normalized)}\nMasked: ${result.maskedAadhaar}';
       } else {
         _aadhaarResult = '✗ Invalid: ${result.error}';
       }
@@ -70,8 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = GstinValidator.validateDetailed(_gstinController.text);
     setState(() {
       if (result.isValid) {
-        final stateName = GstinValidator.getStateName(result.stateCode!) ?? 'Unknown State';
-        _gstinResult = '✓ Valid GSTIN\nState: ${result.stateCode} ($stateName)\nPAN: ${result.panNumber}';
+        final stateName =
+            GstinValidator.getStateName(result.stateCode!) ?? 'Unknown State';
+        _gstinResult =
+            '✓ Valid GSTIN\nState: ${result.stateCode} ($stateName)\nPAN: ${result.panNumber}';
       } else {
         _gstinResult = '✗ Invalid: ${result.error}';
       }
@@ -82,8 +86,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = IfscValidator.validateDetailed(_ifscController.text);
     setState(() {
       if (result.isValid) {
-        final bankName = IfscValidator.getBankName(result.bankCode!) ?? 'Unknown Bank';
-        _ifscResult = '✓ Valid IFSC\nBank: ${result.bankCode} ($bankName)\nBranch Code: ${result.branchCode}';
+        final bankName =
+            IfscValidator.getBankName(result.bankCode!) ?? 'Unknown Bank';
+        _ifscResult =
+            '✓ Valid IFSC\nBank: ${result.bankCode} ($bankName)\nBranch Code: ${result.branchCode}';
       } else {
         _ifscResult = '✗ Invalid: ${result.error}';
       }
@@ -94,8 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
     final result = UpiVpaValidator.validateDetailed(_upiController.text);
     setState(() {
       if (result.isValid) {
-        final providerName = UpiVpaValidator.getProviderName(result.provider!) ?? 'Unknown Provider';
-        _upiResult = '✓ Valid UPI VPA\nUsername: ${result.username}\nProvider: ${result.provider} ($providerName)';
+        final providerName =
+            UpiVpaValidator.getProviderName(result.provider!) ??
+                'Unknown Provider';
+        _upiResult =
+            '✓ Valid UPI VPA\nUsername: ${result.username}\nProvider: ${result.provider} ($providerName)';
       } else {
         _upiResult = '✗ Invalid: ${result.error}';
       }
@@ -136,18 +145,18 @@ class _MyHomePageState extends State<MyHomePage> {
               width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: result.startsWith('✓') 
+                color: result.startsWith('✓')
                     ? Colors.green.withOpacity(0.1)
                     : result.startsWith('✗')
-                    ? Colors.red.withOpacity(0.1)
-                    : Colors.grey.withOpacity(0.1),
+                        ? Colors.red.withOpacity(0.1)
+                        : Colors.grey.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: result.startsWith('✓')
                       ? Colors.green
                       : result.startsWith('✗')
-                      ? Colors.red
-                      : Colors.grey,
+                          ? Colors.red
+                          : Colors.grey,
                 ),
               ),
               child: Text(
@@ -156,8 +165,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: result.startsWith('✓')
                       ? Colors.green.shade700
                       : result.startsWith('✗')
-                      ? Colors.red.shade700
-                      : Colors.grey.shade700,
+                          ? Colors.red.shade700
+                          : Colors.grey.shade700,
                   fontFamily: 'monospace',
                 ),
               ),
