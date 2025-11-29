@@ -146,10 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: result.startsWith('✓')
-                    ? Colors.green.withOpacity(0.1)
+                    ? Colors.green.withValues(alpha: 0.1)
                     : result.startsWith('✗')
-                        ? Colors.red.withOpacity(0.1)
-                        : Colors.grey.withOpacity(0.1),
+                        ? Colors.red.withValues(alpha: 0.1)
+                        : Colors.grey.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color: result.startsWith('✓')

@@ -6,16 +6,16 @@ void main() {
     group('validate', () {
       test('should return true for valid Aadhaar numbers', () {
         // Build valid Aadhaar numbers using Verhoeff check digit
-        final a1 = '23412341234' + VerhoeffChecksum.generate('23412341234');
-        final a2 = '37894561235' + VerhoeffChecksum.generate('37894561235');
-        final a3 = '52345678901' + VerhoeffChecksum.generate('52345678901');
+        final a1 = '23412341234${VerhoeffChecksum.generate('23412341234')}';
+        final a2 = '37894561235${VerhoeffChecksum.generate('37894561235')}';
+        final a3 = '52345678901${VerhoeffChecksum.generate('52345678901')}';
         expect(AadhaarValidator.validate(a1), true);
         expect(AadhaarValidator.validate(a2), true);
         expect(AadhaarValidator.validate(a3), true);
       });
 
       test('should return true for valid Aadhaar with spaces and hyphens', () {
-        final a = '23412341234' + VerhoeffChecksum.generate('23412341234');
+        final a = '23412341234${VerhoeffChecksum.generate('23412341234')}';
         expect(
             AadhaarValidator.validate(
                 '${a.substring(0, 4)}-${a.substring(4, 8)}-${a.substring(8)}'),
@@ -122,7 +122,7 @@ void main() {
 
     group('mask', () {
       test('should mask valid Aadhaar correctly', () {
-        final a = '23412341234' + VerhoeffChecksum.generate('23412341234');
+        final a = '23412341234${VerhoeffChecksum.generate('23412341234')}';
         expect(AadhaarValidator.mask(a), 'XXXX XXXX ${a.substring(8)}');
       });
 
@@ -135,7 +135,7 @@ void main() {
 
     group('format', () {
       test('should format valid Aadhaar correctly', () {
-        final a = '23412341234' + VerhoeffChecksum.generate('23412341234');
+        final a = '23412341234${VerhoeffChecksum.generate('23412341234')}';
         expect(AadhaarValidator.format(a),
             '${a.substring(0, 4)} ${a.substring(4, 8)} ${a.substring(8)}');
       });
@@ -150,9 +150,9 @@ void main() {
 
   group('VerhoeffChecksum', () {
     test('should validate generated test cases', () {
-      final a1 = '23412341234' + VerhoeffChecksum.generate('23412341234');
-      final a2 = '37894561235' + VerhoeffChecksum.generate('37894561235');
-      final a3 = '52345678901' + VerhoeffChecksum.generate('52345678901');
+      final a1 = '23412341234${VerhoeffChecksum.generate('23412341234')}';
+      final a2 = '37894561235${VerhoeffChecksum.generate('37894561235')}';
+      final a3 = '52345678901${VerhoeffChecksum.generate('52345678901')}';
       expect(VerhoeffChecksum.validate(a1), true);
       expect(VerhoeffChecksum.validate(a2), true);
       expect(VerhoeffChecksum.validate(a3), true);

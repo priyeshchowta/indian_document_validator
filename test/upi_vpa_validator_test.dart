@@ -70,7 +70,7 @@ void main() {
       test('should return false for too long username or provider', () {
         final longUsername = 'a' * 51;
         final longProvider = 'b' * 31;
-        expect(UpiVpaValidator.validate('${longUsername}@paytm'), false);
+        expect(UpiVpaValidator.validate('$longUsername@paytm'), false);
         expect(UpiVpaValidator.validate('user@$longProvider'), false);
       });
     });
@@ -126,8 +126,7 @@ void main() {
 
       test('should return detailed error for long username', () {
         final longUsername = 'a' * 51;
-        final result =
-            UpiVpaValidator.validateDetailed('${longUsername}@paytm');
+        final result = UpiVpaValidator.validateDetailed('$longUsername@paytm');
         expect(result.isValid, false);
         expect(result.error, 'Username cannot be longer than 50 characters');
       });

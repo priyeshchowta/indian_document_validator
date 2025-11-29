@@ -6,23 +6,23 @@ void main() {
     group('validate', () {
       test('should return true for valid GSTIN numbers', () {
         // Build valid GSTINs using calculated checksum
-        final g1 = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
-        final g2 = '09ALWPG5809L1Z' + GstChecksum.calculate('09ALWPG5809L1Z');
-        final g3 = '27BNZAA2318J1Z' + GstChecksum.calculate('27BNZAA2318J1Z');
+        final g1 = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
+        final g2 = '09ALWPG5809L1Z${GstChecksum.calculate('09ALWPG5809L1Z')}';
+        final g3 = '27BNZAA2318J1Z${GstChecksum.calculate('27BNZAA2318J1Z')}';
         expect(GstinValidator.validate(g1), true);
         expect(GstinValidator.validate(g2), true);
         expect(GstinValidator.validate(g3), true);
       });
 
       test('should return true for valid GSTIN with spaces and hyphens', () {
-        final g = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
+        final g = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
         expect(GstinValidator.validate('29ABCDE-1234F-1Z${g[14]}'), true);
         expect(GstinValidator.validate('29ABCDE 1234F 1Z${g[14]}'), true);
         expect(GstinValidator.validate(' $g '), true);
       });
 
       test('should return true for lowercase GSTIN (auto-normalized)', () {
-        final g = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
+        final g = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
         expect(GstinValidator.validate(g.toLowerCase()), true);
       });
 
@@ -67,7 +67,7 @@ void main() {
 
     group('validateDetailed', () {
       test('should return detailed result for valid GSTIN', () {
-        final g = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
+        final g = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
         final result = GstinValidator.validateDetailed(g);
         expect(result.isValid, true);
         expect(result.error, null);
@@ -76,7 +76,7 @@ void main() {
       });
 
       test('should return detailed result for valid GSTIN with formatting', () {
-        final g = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
+        final g = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
         final result =
             GstinValidator.validateDetailed('29abcde-1234f-1z${g[14]}');
         expect(result.isValid, true);
@@ -142,8 +142,8 @@ void main() {
 
     group('extractPan', () {
       test('should extract PAN from valid GSTIN', () {
-        final g1 = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
-        final g2 = '09ALWPG5809L1Z' + GstChecksum.calculate('09ALWPG5809L1Z');
+        final g1 = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
+        final g2 = '09ALWPG5809L1Z${GstChecksum.calculate('09ALWPG5809L1Z')}';
         expect(GstinValidator.extractPan(g1), 'ABCDE1234F');
         expect(GstinValidator.extractPan(g2), 'ALWPG5809L');
       });
@@ -157,8 +157,8 @@ void main() {
 
     group('extractStateCode', () {
       test('should extract state code from valid GSTIN', () {
-        final g1 = '29ABCDE1234F1Z' + GstChecksum.calculate('29ABCDE1234F1Z');
-        final g2 = '09ALWPG5809L1Z' + GstChecksum.calculate('09ALWPG5809L1Z');
+        final g1 = '29ABCDE1234F1Z${GstChecksum.calculate('29ABCDE1234F1Z')}';
+        final g2 = '09ALWPG5809L1Z${GstChecksum.calculate('09ALWPG5809L1Z')}';
         expect(GstinValidator.extractStateCode(g1), '29');
         expect(GstinValidator.extractStateCode(g2), '09');
       });
